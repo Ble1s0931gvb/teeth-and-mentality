@@ -100,7 +100,7 @@ const title = "Teeth & Mentality";
             style="background-image: url('/plan3.png'); --delay: 2;"
           >
             <p class="text-sm md:text-base font-semibold text-slate-900">
-              5.<span class="pulse-highlight" data-modal-text="На даний момент існує 400 теорій виникнення карієсу. На цьому вибінарі ми інтерпретуємо РОБОЧУ теорію вінекнення карієсу."> Робоча</span>теорія виникнення карієсу
+              5.<span class="pulse-highlight" data-modal-text="На даний момент існує 400 теорій виникнення карієсу. На цьому вибінарі ми розберемо РОБОЧУ теорію."> Робоча</span>теорія виникнення карієсу
             </p>
           </div>
 
@@ -143,28 +143,96 @@ const title = "Teeth & Mentality";
       <section class="flex justify-center pt-8 z-30 relative">
 
         <!--
-          Было <button> без href/onclick — клик ничего не делал.
-          Заменил на <a href="#">, стилизованный так же. Замени href на реальную
-          ссылку (оплата / форма регистрации / Telegram и т.п.), когда она будет.
+          Было <a href="#"> — просто заглушка. Теперь это форма: собираем email/имя,
+          создаём счёт на 893 грн через /api/create-deposit-invoice и редиректим
+          на страницу оплаты monobank. Сумму НЕЛЬЗЯ передавать с клиента —
+          она зашита на сервере, форма отправляет только email и имя.
         -->
-        <a
-          href="#"
-          class="group w-full max-w-xl bg-white text-slate-900 hover:scale-[1.03] active:scale-[0.98] rounded-3xl p-8 transition-all duration-300 text-left relative overflow-hidden shadow-2xl reveal-bottom block"
+        <form
+          id="booking-form"
+          class="w-full max-w-xl bg-white text-slate-900 rounded-3xl p-8 shadow-2xl reveal-bottom space-y-4"
         >
-          <div class="flex flex-col justify-between h-[110px]">
-            <span class="text-xs uppercase tracking-[0.2em] text-slate-500 font-bold">1 ПЛАН — ПРИДБАТИ БИЛЕТ</span>
+          <span class="block text-xs uppercase tracking-[0.2em] text-slate-500 font-bold">
+            1 ПЛАН — БРОНЮВАННЯ МІСЦЯ
+          </span>
 
-            <div class="flex items-center justify-between">
-              <span class="text-xl md:text-2xl font-black tracking-wide text-slate-900">ОФОРМИТЬ УЧАСТЬ</span>
-
-              <div class="flex items-center transition-transform duration-300 group-hover:translate-x-3">
-                <svg class="w-8 h-8 text-slate-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                </svg>
-              </div>
-            </div>
+          <div class="space-y-3">
+            <input
+              type="text"
+              id="booking-name"
+              name="name"
+              placeholder="Ваше ім'я"
+              required
+              class="w-full rounded-xl border border-slate-300 px-4 py-3 text-slate-900 focus:outline-none focus:ring-2 focus:ring-sky-500"
+            />
+            <input
+              type="email"
+              id="booking-email"
+              name="email"
+              placeholder="Ваш email"
+              required
+              class="w-full rounded-xl border border-slate-300 px-4 py-3 text-slate-900 focus:outline-none focus:ring-2 focus:ring-sky-500"
+            />
           </div>
-        </a>
+
+          <button
+            type="submit"
+            id="booking-submit"
+            class="group w-full flex items-center justify-between bg-slate-900 text-white rounded-2xl px-6 py-5 font-black text-lg md:text-xl tracking-wide hover:scale-[1.02] active:scale-[0.98] transition-transform"
+          >
+            <span>ЗАБРОНЮВАТИ — 893 ГРН</span>
+            <div class="flex items-center transition-transform duration-300 group-hover:translate-x-3">
+              <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+              </svg>
+            </div>
+          </button>
+
+          <p class="text-xs text-slate-500">
+            Друга частина (1000 грн) оплачується ближче до дати семінару — посилання
+            прийде на вказаний email.
+          </p>
+
+          <p id="booking-error" class="text-red-600 text-sm"></p>
+        </form>
+
+        <script>
+          const form = document.getElementById('booking-form') as HTMLFormElement;
+          const submitBtn = document.getElementById('booking-submit') as HTMLButtonElement;
+          const errorMsg = document.getElementById('booking-error') as HTMLElement;
+
+          form?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            errorMsg.textContent = '';
+            submitBtn.disabled = true;
+            const originalText = submitBtn.innerHTML;
+            submitBtn.textContent = 'Зачекайте...';
+
+            const name = (document.getElementById('booking-name') as HTMLInputElement).value;
+            const email = (document.getElementById('booking-email') as HTMLInputElement).value;
+
+            try {
+              const res = await fetch('/api/create-deposit-invoice', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, email }),
+              });
+              const data = await res.json();
+
+              if (data.pageUrl) {
+                window.location.href = data.pageUrl;
+              } else {
+                errorMsg.textContent = data.error || 'Помилка. Спробуйте пізніше.';
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+              }
+            } catch {
+              errorMsg.textContent = 'Проблема з мережею. Спробуйте ще раз.';
+              submitBtn.disabled = false;
+              submitBtn.innerHTML = originalText;
+            }
+          });
+        </script>
 
       </section>
 
