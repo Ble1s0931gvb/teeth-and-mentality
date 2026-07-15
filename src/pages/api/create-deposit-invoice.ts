@@ -35,7 +35,7 @@ async function sendConfirmationEmail(name: string, email: string, amountUAH: num
         from: 'Teeth & Mentality <onboarding@resend.dev>',
         to: email,
         subject: 'Бронювання місця — Teeth & Mentality',
-        html: `<p>Вітаємо, ${name}!</p><p>Ваш завдаток ${amountUAH} грн прийнято в обробку. Друга частина оплати буде надіслана на цю адресу нагадуванням ближче до дати семінару.</p>`,
+        html: `<p>Вітаємо, ${name}!</p><p>Ваш завдаток ${amountUAH} грн прийнято в обробку. Друга частина оплати буде надіслана на цю адресу нагадуванням ближче до дати семінару.</p><p>З додаткових питань пишіть на ilexpokidin@gmail.com</p>`,
       }),
     });
     if (!res.ok) {
