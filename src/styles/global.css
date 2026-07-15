@@ -5,10 +5,6 @@
  */
 @import "tailwindcss";
 
-/* Дальше идет твой старый код... */
-:root 
-	--accent: #2337ff;
-    ...
 :root {
 	--accent: #2337ff;
 	--accent-dark: #000d8a;
