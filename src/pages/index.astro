@@ -59,23 +59,23 @@ const title = "Teeth & Mentality";
 
         <div class="space-y-3 z-10 w-full">
           <div
-            class="text-slate-900 rounded-xl p-4 reveal-left border border-slate-700/20 shadow-md bg-cover bg-center bg-no-repeat"
-            style="background-image: url('/plan3.png'); --delay: 1;"
+            class="text-white rounded-xl p-4 reveal-left shadow-md bg-[#0ea5e9] gradient-border-champagne"
+            style="--delay: 1;"
           >
-            <p class="text-sm md:text-base font-semibold text-slate-900">
+            <p class="text-sm md:text-base font-semibold text-white">
               1. Чому зуб — унікальний орган? Чим зуб відрізняється від <span class="pulse-highlight" data-modal-text="Ви ніколи не замислювались, чому в одних людей зуби здорові, хоча вони за ними навіть не доглядають, а в інших вони руйнуються навіть при регулярному відвідуванні стоматолога та регулярному догляді за ними? Саме на цьому вебінарі й буде розкрита ця важлива думка.">інших</span> органів. Саме в цьому вебінару.
             </p>
           </div>
 
           <div
-            class="text-slate-900 rounded-xl p-4 reveal-left border border-slate-700/20 shadow-md bg-cover bg-center bg-no-repeat"
+            class="text-slate-900 rounded-xl p-4 reveal-left shadow-md bg-cover bg-center bg-no-repeat gradient-border-champagne"
             style="background-image: url('/plan3.png'); --delay: 2;"
           >
-            <p class="text-sm md:text-base font-semibold text-slate-900">2. Анатомічні взаємозв'язки зубів. Структурні: череп, щелепи, СНЩС, постава, вплив оклюзії на все тіло. Органні: зуб і внутрішні органи, м'язові ланцюги, нейрогенні взаємозв'язки.</p>
+            <p class="text-sm md:text-base font-semibold text-slate-900">2. Зуб — як частина єдиної системи організму, у тому числі психіки та енергетики</p>
           </div>
 
           <div
-            class="text-slate-900 rounded-xl p-4 reveal-left border border-slate-700/20 shadow-md bg-cover bg-center bg-no-repeat"
+            class="text-slate-900 rounded-xl p-4 reveal-left shadow-md bg-cover bg-center bg-no-repeat gradient-border-champagne"
             style="background-image: url('/plan3.png'); --delay: 3;"
           >
             <p class="text-sm md:text-base font-semibold text-slate-900">3. Зуби через призму східної медицини. Що таке система У-Сін. П'ять першоелементів.</p>
@@ -89,30 +89,30 @@ const title = "Teeth & Mentality";
 
         <div class="space-y-3 order-2 md:order-1 z-10 w-full">
           <div
-            class="text-slate-900 rounded-xl p-4 reveal-right border border-slate-700/20 shadow-md bg-cover bg-center bg-no-repeat"
+            class="text-slate-900 rounded-xl p-4 reveal-right shadow-md bg-cover bg-center bg-no-repeat gradient-border-champagne"
             style="background-image: url('/plan3.png'); --delay: 1;"
           >
             <p class="text-sm md:text-base font-semibold text-slate-900">4. Психическое обозрение зубов Психоемоційне значимой группы зубов.</p>
           </div>
 
           <div
-            class="text-slate-900 rounded-xl p-4 reveal-right border border-slate-700/20 shadow-md bg-cover bg-center bg-no-repeat"
-            style="background-image: url('/plan3.png'); --delay: 2;"
+            class="text-white rounded-xl p-4 reveal-right shadow-md bg-[#0ea5e9] gradient-border-champagne"
+            style="--delay: 2;"
           >
-            <p class="text-sm md:text-base font-semibold text-slate-900">
+            <p class="text-sm md:text-base font-semibold text-white">
               5.<span class="pulse-highlight" data-modal-text="На даний момент існує 400 теорій виникнення карієсу. На цьому вибінарі ми розберемо РОБОЧУ теорію."> Робоча</span>теорія виникнення карієсу
             </p>
           </div>
 
           <div
-            class="text-slate-900 rounded-xl p-4 reveal-right border border-slate-700/20 shadow-md bg-cover bg-center bg-no-repeat"
+            class="text-slate-900 rounded-xl p-4 reveal-right shadow-md bg-cover bg-center bg-no-repeat gradient-border-champagne"
             style="background-image: url('/plan3.png'); --delay: 3;"
           >
             <p class="text-sm md:text-base font-semibold text-slate-900">6. Як змінюється прогноз лікування при усвідомленні причин та цілісному підході.</p>
           </div>
 
           <div
-            class="text-slate-900 rounded-xl p-4 reveal-right border border-slate-700/20 shadow-md bg-cover bg-center bg-no-repeat"
+            class="text-slate-900 rounded-xl p-4 reveal-right shadow-md bg-cover bg-center bg-no-repeat gradient-border-champagne"
             style="background-image: url('/plan3.png'); --delay: 4;"
           >
             <p class="text-sm md:text-base font-semibold text-slate-900">7. Седьмая строчка: интерактивная сессия вопросов-ответов.</p>
@@ -189,7 +189,7 @@ const title = "Teeth & Mentality";
           </button>
 
           <p class="text-xs text-slate-500">
-            Друга частина (1000 грн) оплачується ближче до дати семінару — посилання
+            Друга частина (1080 грн) оплачується ближче до дати семінару — посилання
             прийде на вказаний email.
           </p>
 
@@ -457,6 +457,23 @@ const title = "Teeth & Mentality";
   .reveal-bottom.active {
     opacity: 1;
     transform: translateY(0);
+  }
+
+  .gradient-border-champagne {
+    position: relative;
+    border: none;
+  }
+  .gradient-border-champagne::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1.5px;
+    background: linear-gradient(135deg, #f5f0e8, #e8dcc8, #f0ead8, #e8dcc8);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
   }
 
   .pulse-highlight {
