@@ -16,7 +16,7 @@ function getCurrentDepositAmount(): number {
 }
 
 async function sendConfirmationEmail(name: string, email: string, amountUAH: number) {
-  const resendKey = import.meta.env.RESEND_API_KEY;
+  const resendKey = process.env.RESEND_API_KEY;
   if (!resendKey) {
     console.error('RESEND_API_KEY is not set — confirmation email skipped');
     return;
@@ -61,7 +61,7 @@ export const POST: APIRoute = async ({ request }) => {
 
     // Токен мерчанта Monobank — из переменной окружения Netlify.
     // Задать: Netlify → Site settings → Environment variables → MONOBANK_TOKEN.
-    const token = import.meta.env.MONOBANK_TOKEN;
+    const token = process.env.MONOBANK_TOKEN;
 
     if (!token) {
       console.error('MONOBANK_TOKEN is not set');
