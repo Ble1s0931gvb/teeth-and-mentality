@@ -62,9 +62,11 @@ export const POST: APIRoute = async ({ request }) => {
     // Токен мерчанта Monobank — из переменной окружения Netlify.
     // Задать: Netlify → Site settings → Environment variables → MONOBANK_TOKEN.
     const token = process.env.MONOBANK_TOKEN;
+    console.log('DEBUG MONOBANK_TOKEN exists:', !!token, 'type:', typeof token, 'length:', token?.length);
 
     if (!token) {
       console.error('MONOBANK_TOKEN is not set');
+      console.error('Available env keys:', Object.keys(process.env).filter(k => k.includes('MONO') || k.includes('TOKEN') || k.includes('MONOBANK')));
       return new Response(
         JSON.stringify({ error: 'Платіжний сервіс тимчасово недоступний' }),
         { status: 500, headers: { 'Content-Type': 'application/json' } }
