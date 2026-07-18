@@ -46,6 +46,30 @@ async function sendConfirmationEmail(name: string, email: string, amountUAH: num
   }
 }
 
+async function sendOwnerNotification(name: string, email: string, amountUAH: number, isEarly: boolean, invoiceId: string) {
+  const resendKey = process.env.RESEND_API_KEY;
+  if (!resendKey) return;
+  const now = new Date().toLocaleString('uk-UA', { timeZone: 'Europe/Kyiv' });
+  const priceType = isEarly ? 'рання (893 грн)' : 'повна (1080 грн)';
+  try {
+    await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${resendKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        from: 'Teeth & Mentality <onboarding@resend.dev>',
+        to: 'ilexpokidin@gmail.com',
+        subject: `Нова оплата — ${amountUAH} грн`,
+        html: `<p><b>Нова оплата на сайті Teeth & Mentality</b></p><p><b>Час:</b> ${now}</p><p><b>Ім'я:</b> ${name}</p><p><b>Email:</b> ${email}</p><p><b>Сума:</b> ${amountUAH} грн (${priceType})</p><p><b>Invoice ID:</b> ${invoiceId}</p>`,
+      }),
+    });
+  } catch (err) {
+    console.error('Owner notification email failed:', err);
+  }
+}
+
 export const POST: APIRoute = async ({ request }) => {
   try {
     const body = await request.json().catch(() => null);
@@ -123,6 +147,7 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     sendConfirmationEmail(name, email, amountUAH, isEarly);
+    sendOwnerNotification(name, email, amountUAH, isEarly, data.invoiceId);
 
     return new Response(
       JSON.stringify({ pageUrl: data.pageUrl, invoiceId: data.invoiceId }),
