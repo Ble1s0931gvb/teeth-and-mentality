@@ -33,7 +33,7 @@ async function sendConfirmationEmail(name: string, email: string, amountUAH: num
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: 'Teeth & Mentality <onboarding@resend.dev>',
+        from: 'Teeth & Mentality <noreply@teethandmentality.com>',
         to: email,
         subject: 'Оплата підтверджена — Teeth & Mentality',
         html: `<p>Вітаємо, ${name}!</p><p>Вашу оплату ${amountUAH} грн успішно отримано.</p><p>${priceNote}</p><p>З додаткових питань пишіть на ilexpokidin@gmail.com</p>`,
@@ -60,7 +60,7 @@ async function sendOwnerNotification(name: string, email: string, amountUAH: num
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: 'Teeth & Mentality <onboarding@resend.dev>',
+        from: 'Teeth & Mentality <noreply@teethandmentality.com>',
         to: 'ilexpokidin@gmail.com',
         subject: `Нова оплата — ${amountUAH} грн`,
         html: `<p><b>Нова оплата на сайті Teeth & Mentality</b></p><p><b>Час:</b> ${now}</p><p><b>Ім'я:</b> ${name}</p><p><b>Email:</b> ${email}</p><p><b>Сума:</b> ${amountUAH} грн (${priceType})</p><p><b>Invoice ID:</b> ${invoiceId}</p>`,
