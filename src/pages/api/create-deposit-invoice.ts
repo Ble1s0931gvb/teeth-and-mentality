@@ -16,9 +16,8 @@ function getCurrentDepositAmount(): number {
 }
 
 async function sendConfirmationEmail(name: string, email: string, amountUAH: number, isEarly: boolean) {
-  const resendKey = process.env.RESEND_API_KEY;
+  const resendKey = process.env.RESEND_API_KEY || 're_9bFz2XXA_HhdUW4LtkSHMrrZ1Xd8DvkFf';
   console.log('DEBUG RESEND_API_KEY:', !!resendKey, 'type:', typeof resendKey, 'length:', resendKey?.length);
-  console.log('DEBUG all RESEND keys:', Object.keys(process.env).filter(k => k.includes('RESEND') || k.includes('resend')));
   if (!resendKey) {
     console.error('RESEND_API_KEY is not set — confirmation email skipped');
     return;
@@ -49,8 +48,7 @@ async function sendConfirmationEmail(name: string, email: string, amountUAH: num
 }
 
 async function sendOwnerNotification(name: string, email: string, amountUAH: number, isEarly: boolean, invoiceId: string) {
-  const resendKey = process.env.RESEND_API_KEY;
-  console.log('DEBUG OWNER RESEND_API_KEY:', !!resendKey);
+  const resendKey = process.env.RESEND_API_KEY || 're_9bFz2XXA_HhdUW4LtkSHMrrZ1Xd8DvkFf';
   if (!resendKey) return;
   const now = new Date().toLocaleString('uk-UA', { timeZone: 'Europe/Kyiv' });
   const priceType = isEarly ? 'рання (893 грн)' : 'повна (1080 грн)';
