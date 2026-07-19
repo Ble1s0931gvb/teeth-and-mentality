@@ -147,11 +147,6 @@ export const POST: APIRoute = async ({ request }) => {
       console.error('Failed to save booking to Blobs:', err);
     }
 
-    console.log('Sending emails...');
-    await sendConfirmationEmail(name, email, amountUAH, isEarly);
-    await sendOwnerNotification(name, email, amountUAH, isEarly, data.invoiceId);
-    console.log('Emails sent');
-
     return new Response(
       JSON.stringify({ pageUrl: data.pageUrl, invoiceId: data.invoiceId }),
       { status: 200, headers: { 'Content-Type': 'application/json' } }
