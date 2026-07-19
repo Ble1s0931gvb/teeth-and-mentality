@@ -16,6 +16,7 @@ function getCurrentDepositAmount(): number {
 }
 
 async function sendConfirmationEmail(name: string, email: string, amountUAH: number, isEarly: boolean) {
+  console.log('DEBUG ALL ENV KEYS:', JSON.stringify(Object.keys(process.env).sort()));
   const resendKey = process.env.RESEND_API_KEY;
   if (!resendKey) {
     console.error('RESEND_API_KEY is not set — confirmation email skipped');
