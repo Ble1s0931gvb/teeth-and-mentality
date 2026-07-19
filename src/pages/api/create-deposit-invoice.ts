@@ -116,6 +116,7 @@ export const POST: APIRoute = async ({ request }) => {
         // Куда вернуть человека после оплаты. Замени на реальную
         // страницу "дякуємо" (/thank-you), если/когда она появится.
         redirectUrl: 'https://teethandmentality.com/',
+        webHookUrl: 'https://teethandmentality.com/api/monobank-webhook',
         validity: 3600, // ссылка на оплату живёт 1 час
         paymentType: 'debit',
       }),
