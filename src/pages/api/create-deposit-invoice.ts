@@ -16,8 +16,8 @@ function getCurrentDepositAmount(): number {
 }
 
 async function sendConfirmationEmail(name: string, email: string, amountUAH: number, isEarly: boolean) {
-  console.log('DEBUG ALL ENV KEYS:', JSON.stringify(Object.keys(process.env).sort()));
   const resendKey = process.env.RESEND_API_KEY;
+  console.log('DEBUG RESEND_API_KEY exists:', !!resendKey, 'length:', resendKey?.length);
   if (!resendKey) {
     console.error('RESEND_API_KEY is not set — confirmation email skipped');
     return;
@@ -147,8 +147,10 @@ export const POST: APIRoute = async ({ request }) => {
       console.error('Failed to save booking to Blobs:', err);
     }
 
-    sendConfirmationEmail(name, email, amountUAH, isEarly);
-    sendOwnerNotification(name, email, amountUAH, isEarly, data.invoiceId);
+    console.log('Sending emails...');
+    await sendConfirmationEmail(name, email, amountUAH, isEarly);
+    await sendOwnerNotification(name, email, amountUAH, isEarly, data.invoiceId);
+    console.log('Emails sent');
 
     return new Response(
       JSON.stringify({ pageUrl: data.pageUrl, invoiceId: data.invoiceId }),
